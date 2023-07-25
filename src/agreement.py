@@ -1,5 +1,8 @@
+from datetime import date
+
+
 class Agreement:
-    def __init__(self, gng_name: str, from_sector: str, to_sector: str, gng_notes: str, sortorder: int, fix_before: str, dep_rwy: str, copx_fix: str, fix_after: str , arr_rwy: str, climb: int, descend: int, from_vacc: str, to_vacc: str, at_level: bool = True, cop_display: str = None, from_sector_display: str = None, to_sector_display: str = None, footnote: str = None, special_conditions: str = None, is_altitude: bool = False):
+    def __init__(self, gng_name: str, from_sector: str, to_sector: str, gng_notes: str, sortorder: int, fix_before: str, dep_rwy: str, copx_fix: str, fix_after: str , arr_rwy: str, climb: int, descend: int, from_vacc: str, to_vacc: str, at_level: bool = True, cop_display: str = None, from_sector_display: str = None, to_sector_display: str = None, footnote: str = None, special_conditions: str = None, is_altitude: bool = False, edit_date: date = None):
         # Values for GNG
         self.from_vacc = from_vacc
         self.to_vacc = to_vacc
@@ -24,6 +27,9 @@ class Agreement:
         self.footnote = footnote
         self.special_conditions = special_conditions
         self.is_altitude = is_altitude
+
+        # Versioning
+        self.edit_date = edit_date
 
     def make_ese_entry(self):
         if self.from_vacc == self.to_vacc:

@@ -4,7 +4,7 @@ from PyQt6.QtCore import Qt
 from typing import List
 import json
 from agreement import Agreement
-import time
+from datetime import date
 
 
 class MyApp(QMainWindow):
@@ -71,13 +71,17 @@ class MyApp(QMainWindow):
             new_value = item.text()
 
         setattr(self.agreement_list[row], list(vars(self.agreement_list[0]).keys())[column], new_value)
-
+        self.agreement_list[row].edit_date = str(date.today())
+        print('lol')
         #TODO: more efficient!
-        agreements = []
-        for agreement in self.agreement_list:
-            agreements.append(agreement.__dict__)
+        # agreements = []
+        # for agreement in self.agreement_list:
+        #     agreements.append(agreement.__dict__)
+        with open('edgg_loas', 'r') as fout:
+            contents = json.loads(fout.read())
+        contents[row] = self.agreement_list[row].__dict__
         with open('edgg_loas', 'w') as fout:
-            json.dump(agreements, fout, indent=0)
+            json.dump(contents, fout, indent=0)
 
     def filter_table(self):
         filter_text = self.filter_box.text().strip().lower()
@@ -94,6 +98,7 @@ def main():
     window = MyApp('edgg_loas')
     window.show()
     sys.exit(app.exec())
+
 
 if __name__ == "__main__":
     main()
